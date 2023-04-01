@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Inmobiliaria2.Models
 {
-    public class PropietarioRepxositorio
+    public class PropietarioRepositorio
     {
         string connectionString = "Server=localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
         public PropietarioRepositorio()
