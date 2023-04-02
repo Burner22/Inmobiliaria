@@ -3,58 +3,117 @@
 @{
     ViewData["Title"] = "Details";
 }
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+</head>
+<body>
+    <div>
+        <h4>Inmueble</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.IdInmueble)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.IdInmueble)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.IdPropietario)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.IdPropietario)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Direccion)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Direccion)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Tipo)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Tipo)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Uso)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Uso)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Ambientes)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Ambientes)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Precio)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Precio)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Disponible)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Disponible)
+            </dd>
+            @*<dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Longitud)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Longitud)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Latitud)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Latitud)
+            </dd>*@
+        </dl>
+    </div>
+    <div style="height: 400px;width:700px;" id="map">
+    @*<div>
+        @Html.ActionLink("Edit", "Edit", new { id=Model.IdInmueble }) |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+    <script>
+            var map = L.map('map').setView([model.Latitud, model.Longitud], 13);
+        var lastMarker = null;
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        function onMapClick(e) {
+            var latInput = document.getElementById('lat-input');
+            var lngInput = document.getElementById('lng-input');
+            latInput.value = e.latlng.lat;
+            lngInput.value = e.latlng.lng;
+            //alert("You clicked the map at " + e.latlng);
+            if (lastMarker !== null) {
+                lastMarker.remove();
+            }
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+            console.log(e.latlng.toString());
+                var marker = L.marker([model.Latitud, model.Longitud]).addTo(map);
+            lastMarker = marker;
 
-<h1>Details</h1>
+        }
+        console.log(model)
+        map.on('click', onMapClick);
+    </script>
 
-<div>
-    <h4>Inmueble</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdInmueble)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdInmueble)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Uso)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Uso)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ambientes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ambientes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Disponible)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Disponible)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+</body>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

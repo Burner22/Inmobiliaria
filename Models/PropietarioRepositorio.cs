@@ -108,7 +108,7 @@ namespace Inmobiliaria2.Models
             int con = 0;
             using(MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sql = @"DELETE FROM propietario WHERE idPropietario = @id";
+                string sql = @"DELETE FROM propietario WHERE idPropietario = @idPropietario";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@idPropietario", id);
@@ -125,23 +125,23 @@ namespace Inmobiliaria2.Models
             int con = 0;
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sql = @"UPDATE FROM propietarios SET 
+                string sql = @"UPDATE propietario SET 
                             nombre = @nombre, 
                             dni = @dni, 
                             apellido = @apellido, 
                             telefono = @telefono, 
                             domicilio = @domicilio, 
                             email=@email 
-                            WHERE idPropietario = @id ";
+                            WHERE idPropietario = @idPropietario ";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@idPropietario", propietario.Id);
                     command.Parameters.AddWithValue("@nombre", propietario.nombre);
                     command.Parameters.AddWithValue("@dni", propietario.Dni);
                     command.Parameters.AddWithValue("@apellido", propietario.Apellido);
                     command.Parameters.AddWithValue("@telefono", propietario.Telefono);
                     command.Parameters.AddWithValue("@domicilio", propietario.Domicilio);
-                    command.Parameters.AddWithValue("@email", propietario.Email);
-                    command.Parameters.AddWithValue("@id", propietario.Id);
+                    command.Parameters.AddWithValue("@email", propietario.Email);                 
                     connection.Open();
                     con = command.ExecuteNonQuery();
                     connection.Close();

@@ -1,4 +1,8 @@
-﻿namespace Inmobiliaria2.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
+
+namespace Inmobiliaria2.Models
 {
     public class Inmueble
     {
@@ -10,12 +14,55 @@
         private int ambientes;
         private double precio;
         private bool disponible;
+        private string latitud;
+        private string longitud;
+        public int idPropietario;
 
         // Constructor por defecto
         public Inmueble() { }
 
+        public Inmueble(Propietario propietario) 
+        {
+            this.propietario = propietario;
+        }
+
+        public Inmueble(int idInmueble, Propietario propietario, string direccion, bool disponible)
+        {
+            this.direccion = direccion; 
+            this.disponible=disponible;
+            this.idInmueble = idInmueble;
+            this.propietario= propietario;
+                    
+        }
+
+        public Inmueble(Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
+        {
+            this.propietario = propietario;
+            this.direccion = direccion;
+            this.tipo = tipo;
+            this.uso = uso;
+            this.ambientes = ambientes;
+            this.precio = precio;
+            this.disponible = disponible;
+            this.latitud = latitud;
+            this.longitud = longitud;
+        }
+
+        public Inmueble(int idPropietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
+        {
+            this.idPropietario = idPropietario;
+            this.direccion = direccion;
+            this.tipo = tipo;
+            this.uso = uso;
+            this.ambientes = ambientes;
+            this.precio = precio;
+            this.disponible = disponible;
+            this.latitud = latitud;
+            this.longitud = longitud;
+        }
+
         // Constructor con parámetros
-        public Inmueble(int idInmueble, Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible)
+        public Inmueble(int idInmueble, Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
         {
             this.idInmueble = idInmueble;
             this.propietario = propietario;
@@ -25,7 +72,11 @@
             this.ambientes = ambientes;
             this.precio = precio;
             this.disponible = disponible;
+            this.latitud = latitud;
+            this.longitud = longitud;
         }
+
+
 
         // Getters y setters
         public int IdInmueble
@@ -33,12 +84,10 @@
             get { return idInmueble; }
             set { idInmueble = value; }
         }
-
-        public Propietario Propietario
-        {
-            get { return propietario; }
-            set { propietario = value; }
-        }
+        [Display(Name = "Dueño")]
+        public int IdPropietario { get; set; }
+        [ForeignKey(nameof(IdPropietario))]
+        public Propietario Propietario { get; set; }
 
         public string Direccion
         {
@@ -74,6 +123,16 @@
         {
             get { return disponible; }
             set { disponible = value; }
+        }
+        public string Longitud
+        {
+            get { return longitud; }
+            set { longitud = value; }
+        }
+        public string Latitud
+        {
+            get { return latitud; }
+            set { latitud = value; }
         }
     }
 

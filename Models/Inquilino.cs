@@ -10,12 +10,29 @@
         private string telefono;
         private string email;
         private string domicilio_trabajo;
+        private string domicilio;
+        private string nombre_garante;
+        private string dni_garante;
 
         // Constructor por defecto
         public Inquilino() { }
 
+        public Inquilino(string dni, string cuil_cuit, string nombre, string apellido, string telefono, string email, string domicilio_trabajo, string domicilio, string nombre_garante, string dni_garante)
+        {
+            this.dni = dni;
+            this.cuil_cuit = cuil_cuit;
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.telefono = telefono;
+            this.email = email;
+            this.domicilio_trabajo = domicilio_trabajo;
+            this.domicilio = domicilio;
+            this.nombre_garante = nombre_garante;
+            this.dni_garante = dni_garante;
+        }
+
         // Constructor con parámetros
-        public Inquilino(int idInquilino, string dni, string cuil_cuit, string nombre, string apellido, string telefono, string email, string domicilio_trabajo)
+        public Inquilino(int idInquilino, string dni, string cuil_cuit, string nombre, string apellido, string telefono, string email, string domicilio_trabajo, string domicilio, string nombre_garante, string dni_garante)
         {
             this.idInquilino = idInquilino;
             this.dni = dni;
@@ -25,6 +42,9 @@
             this.telefono = telefono;
             this.email = email;
             this.domicilio_trabajo = domicilio_trabajo;
+            this.domicilio = domicilio;
+            this.nombre_garante = nombre_garante;
+            this.dni_garante = dni_garante;
         }
 
         // Getters y setters
@@ -74,6 +94,22 @@
         {
             get { return domicilio_trabajo; }
             set { domicilio_trabajo = value; }
+        }
+        public string Domicilio
+        {
+            get { return domicilio; }
+            set { domicilio = value; }
+        }
+        public string Nombre_garante
+        {
+            get { return nombre_garante; }
+            set { nombre_garante = value; }
+        }
+
+        public string Dni_garante
+        {
+            get { return dni_garante; }
+            set { dni_garante = value; }
         }
     }
 

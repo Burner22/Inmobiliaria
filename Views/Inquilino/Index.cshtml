@@ -36,6 +36,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Domicilio_trabajo)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Domicilio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre_garante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni_garante)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -67,9 +76,18 @@
                 @Html.DisplayFor(modelItem => item.Domicilio_trabajo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Domicilio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_garante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dni_garante)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdInquilino }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.IdInquilino }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdInquilino })
             </td>
         </tr>
 }

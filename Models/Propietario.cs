@@ -2,7 +2,7 @@
 {
     public class Propietario
     {
-        private int id;
+        public int id;
         private string dni;
         public string nombre;
         private string apellido;
@@ -15,9 +15,21 @@
             // Constructor vac�o
         }
 
+        public Propietario(int id)
+        {
+            this.id = id;
+        }
+
         public Propietario(string nombre)
         {
             this.nombre = nombre;
+        }
+
+        public Propietario(int id, string nombre, string apellido)
+        {
+            this.id = id;
+            this.nombre = nombre;
+            this.apellido  = apellido;
         }
 
         public Propietario(string dni, string nombre, string apellido, string telefono, string email, string domicilio)

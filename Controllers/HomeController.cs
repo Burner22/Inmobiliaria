@@ -23,12 +23,6 @@ namespace Inmobiliaria2.Controllers
             return View();
         }
 
-        //public IActionResult Ver()
-        //{
-        //    PropietarioRepositorio propietarioRepositorio = new PropietarioRepositorio();
-        //    var lista = propietarioRepositorio.GetPropietarios();
-        //    return View(lista);
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

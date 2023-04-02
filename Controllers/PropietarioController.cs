@@ -25,6 +25,7 @@ namespace inmobiliaria2.Controllers
         // GET: Propietario
         public ActionResult Index()
         {
+
             var lista = repo.GetPropietarios();
             return View(lista);
         }
@@ -56,7 +57,7 @@ namespace inmobiliaria2.Controllers
             }
             catch(Exception exp)
             {
-                return View(exp);
+                throw;
             }
         }
 
@@ -75,6 +76,7 @@ namespace inmobiliaria2.Controllers
             try
             {
                 // TODO: Add update logic here
+                
                 repo.Modificar(propietario);
                 return RedirectToAction(nameof(Index));
             }
@@ -105,7 +107,7 @@ namespace inmobiliaria2.Controllers
             }
             catch (Exception exc)
             {
-                return View(exc);
+                throw;
             }
         }
     }

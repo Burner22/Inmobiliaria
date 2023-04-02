@@ -1,60 +1,125 @@
 @model Inmobiliaria2.Models.Inmueble
 
+
 @{
     ViewData["Title"] = "Create";
+    var ltaPropietarios = (IList<Propietario>)ViewBag.Propietario;
 }
 
-<h1>Create</h1>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+</head>
 
-<h4>Inmueble</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdInmueble" class="control-label"></label>
-                <input asp-for="IdInmueble" class="form-control" />
-                <span asp-validation-for="IdInmueble" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <input asp-for="Tipo" class="form-control" />
-                <span asp-validation-for="Tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Uso" class="control-label"></label>
-                <input asp-for="Uso" class="form-control" />
-                <span asp-validation-for="Uso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ambientes" class="control-label"></label>
-                <input asp-for="Ambientes" class="form-control" />
-                <span asp-validation-for="Ambientes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Disponible" /> @Html.DisplayNameFor(model => model.Disponible)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<body>
+    <h4>Inmueble</h4>
+    <div >
+        <div style="float: left" class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Propietario</label>
+                    <select asp-for="idPropietario" class="form-control" name="Propietario">
+                        @foreach (var item in ltaPropietarios)
+                        {
+                            <option value="@item.Id">@(item.Nombre+" "+item.Apellido)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="idPropietario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Direccion" class="control-label"></label>
+                    <input asp-for="Direccion" class="form-control" />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tipo" class="control-label"></label>
+                    <select class="form-control" name="Tipo">
+                        <option selected value="Local">Local</option>
+                        <option value="Deposito">Deposito</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Departamento">Departamento</option>
+                    </select>
+                    <span asp-validation-for="Uso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Uso" class="control-label"></label>
+                    <select class="form-control" name="Uso">
+                        <option selected value="Residencial">Residencial</option>
+                        <option value="Comercial">Comercial</option>
+                    </select>
+                    <span asp-validation-for="Uso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ambientes" class="control-label"></label>
+                    <input asp-for="Ambientes" class="form-control" min="0"/>
+                    <span asp-validation-for="Ambientes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Precio" class="control-label"></label>
+                    <input asp-for="Precio" class="form-control" pattern="[0-9]+" title="Por favor ingresa solo números" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Disponible" /> @Html.DisplayNameFor(model => model.Disponible)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Longitud" class="control-label"></label>
+                    <input asp-for="Longitud" id="lng-input" class="form-control" readonly/>
+                    <span asp-validation-for="Longitud" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Latitud" class="control-label"></label>
+                    <input asp-for="Latitud" id="lat-input" class="form-control" readonly/>
+                    <span asp-validation-for="Latitud" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    <div style="height: 400px;width:700px;" id="map">
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <script>
+        var map = L.map('map').setView([-33.302143, -66.336844], 13);
+        var lastMarker = null;
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        function onMapClick(e) {
+            var latInput = document.getElementById('lat-input');
+            var lngInput = document.getElementById('lng-input');
+            latInput.value = e.latlng.lat;
+            lngInput.value = e.latlng.lng;
+            //alert("You clicked the map at " + e.latlng);
+            if (lastMarker !== null) {
+                lastMarker.remove();
+            }
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+            console.log(e.latlng.toString());
+            var marker = L.marker([lat, lng]).addTo(map);
+            lastMarker = marker;
+
+        }
+
+        map.on('click', onMapClick);
+    </script>
+
+</body>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 

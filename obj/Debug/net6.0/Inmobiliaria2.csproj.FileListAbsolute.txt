@@ -257,3 +257,4 @@ C:\Users\Fiero-Sama\Desktop\.NET\Inmobiliaria2\obj\Debug\net6.0\refint\Inmobilia
 C:\Users\Fiero-Sama\Desktop\.NET\Inmobiliaria2\obj\Debug\net6.0\Inmobiliaria2.pdb
 C:\Users\Fiero-Sama\Desktop\.NET\Inmobiliaria2\obj\Debug\net6.0\Inmobiliaria2.genruntimeconfig.cache
 C:\Users\Fiero-Sama\Desktop\.NET\Inmobiliaria2\obj\Debug\net6.0\ref\Inmobiliaria2.dll
+C:\Users\Fiero-Sama\Desktop\.NET\Inmobiliaria2\bin\Debug\net6.0\GoogleMaps.LocationServices.dll
