@@ -29,7 +29,7 @@
         {
             this.id = id;
             this.nombre = nombre;
-            this.apellido  = apellido;
+            this.apellido = apellido;
         }
 
         public Propietario(string dni, string nombre, string apellido, string telefono, string email, string domicilio)
@@ -68,5 +68,12 @@
         public string Email { get => email; set => email = value; }
 
         public string Telefono { get => telefono; set => telefono = value; }
+
+        public override string ToString()
+        {
+            //return $"{Apellido}, {Nombre}";
+            return $"{Nombre} {Apellido}";
+        }
+
     }
 }

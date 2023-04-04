@@ -17,6 +17,7 @@ namespace Inmobiliaria2.Models
         private string latitud;
         private string longitud;
         public int idPropietario;
+        private bool borrado;
 
         // Constructor por defecto
         public Inmueble() { }

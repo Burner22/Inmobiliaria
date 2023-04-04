@@ -26,7 +26,11 @@ namespace Inmobiliaria2.Controllers
         // GET: Inmueble/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            InmuebleRepositorio inmuRepo = new InmuebleRepositorio();
+            var inmueble = inmuRepo.GetInmueble(id);
+            ViewBag.Latitud = inmueble.Latitud;
+            ViewBag.Longitd = inmueble.Longitud;
+            return View(inmueble);
         }
 
         // GET: Inmueble/Create
@@ -67,23 +71,27 @@ namespace Inmobiliaria2.Controllers
         {
             InmuebleRepositorio inmuRepo = new InmuebleRepositorio();
             var inmueble = inmuRepo.GetInmueble(id);
+            ViewBag.Propietario = propietario.GetPropietarios();
+            ViewBag.Latitud = inmueble.Latitud;
+            ViewBag.Longitd = inmueble.Longitud;
             return View(inmueble);
         }
 
         // POST: Inmueble/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Inmueble inmueble)
         {
             try
             {
                 // TODO: Add update logic here
-
+                InmuebleRepositorio inmuRepo = new InmuebleRepositorio();
+                inmuRepo.Modificar(inmueble);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception exc)
             {
-                return View();
+                throw;
             }
         }
 
@@ -96,7 +104,7 @@ namespace Inmobiliaria2.Controllers
         // POST: Inmueble/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Inmueble inmueble)
         {
             try
             {

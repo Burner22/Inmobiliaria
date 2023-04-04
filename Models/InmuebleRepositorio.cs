@@ -46,12 +46,11 @@ namespace Inmobiliaria2.Models
             Inmueble res = new Inmueble();
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string sql = @"SELECT * FROM Inmuebles i JOIN Propietarios p ON i.idPropietario = p.IdPropietario
-                               WHERE i.idInmueble=@id";
+                string sql = @"SELECT * FROM inmueble i JOIN propietario p ON i.idPropietario = p.idPropietario WHERE i.idInmueble=@id;";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
-                    command.CommandType = CommandType.Text;
+                    command.CommandType = System.Data.CommandType.Text;
                     connection.Open();
                     var reader = command.ExecuteReader();
                     if (reader.Read())
@@ -62,6 +61,7 @@ namespace Inmobiliaria2.Models
                             Direccion = reader.GetString("direccion"),
                             Disponible = reader.GetBoolean("disponible"),
                             Uso = reader.GetString("uso"),
+                            Tipo = reader.GetString("tipo"),
                             Ambientes = reader.GetInt32("ambientes"),
                             Precio = reader.GetDouble("precio"),
                             Latitud = reader.GetString("latitud"),
@@ -69,14 +69,13 @@ namespace Inmobiliaria2.Models
                             Propietario = new Propietario
                             {
                                 Id = reader.GetInt32("idPropietario"),
-                                Dni = reader.GetString("dni"),
-                                Nombre = reader.GetString("nombre"),
-                                Apellido = reader.GetString("apellido"),
-                                Domicilio = reader.GetString("domicilio"),
-                                Telefono = reader.GetString("telefono"),
-                                Email = reader.GetString("email")
+                                Nombre = reader.GetString("Nombre"),
+                                Apellido = reader.GetString("Apellido"),
+                                Dni = reader.GetString("Dni"),
+                                Telefono = reader.GetString("Telefono"),
+                                Email = reader.GetString("Email"),
+                                Domicilio = reader.GetString("Domicilio")
                             }
-
                         };
                     }
                     connection.Close();
@@ -84,6 +83,8 @@ namespace Inmobiliaria2.Models
             }
             return res;
         }
+
+
 
         public int Alta(Inmueble inmueble)
         {
@@ -114,6 +115,40 @@ namespace Inmobiliaria2.Models
             return con;
         }
 
+        public int Modificar(Inmueble inmueble)
+        {
+            int con = 0;
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string sql = @"UPDATE inmueble SET 
+                              idPropietario=@Propietario, 
+                                direccion=@direccion, 
+                                tipo=@tipo, uso=@uso, 
+                                ambientes=@ambientes, 
+                                precio=@precio,
+                                disponible=@disponible,
+                                latitud=@latitud,
+                                longitud=@longitud
+                                WHERE idInmueble = @idInmueble";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Propietario", inmueble.IdPropietario);
+                    command.Parameters.AddWithValue("@direccion", inmueble.Direccion);
+                    command.Parameters.AddWithValue("@tipo", inmueble.Tipo);
+                    command.Parameters.AddWithValue("@uso", inmueble.Uso);
+                    command.Parameters.AddWithValue("@ambientes", inmueble.Ambientes);
+                    command.Parameters.AddWithValue("@precio", inmueble.Precio);
+                    command.Parameters.AddWithValue("@disponible", inmueble.Disponible);
+                    command.Parameters.AddWithValue("@latitud", inmueble.Latitud);
+                    command.Parameters.AddWithValue("@longitud", inmueble.Longitud);
+                    command.Parameters.AddWithValue("@idInmueble", inmueble.IdInmueble);
+                    connection.Open();
+                    con = command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return con;
+        }
 
 
 

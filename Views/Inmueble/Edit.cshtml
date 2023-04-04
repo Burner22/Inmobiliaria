@@ -1,11 +1,12 @@
 @model Inmobiliaria2.Models.Inmueble
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
+    var latitud = ViewBag.Latitud;
+    var longitud = ViewBag.Longitud;
+    var propietario = ViewBag.Propietario;
     var ltaPropietarios = (IList<Propietario>)ViewBag.Propietario;
-    
 }
-
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
           integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -17,16 +18,22 @@
 
 <body style="height:800px">
     <h4>Inmueble</h4>
+    <hr />
     <div >
-        <div style="float: left" class="col-md-4">
-            <form asp-action="Create">
+        <div style=float:left class="col-md-4">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="IdInmueble" class="control-label"></label>
+                    <input asp-for="IdInmueble" class="form-control" readonly />
+                    <span asp-validation-for="IdInmueble" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label class="control-label">Propietario</label>
                     <select asp-for="idPropietario" class="form-control" name="Propietario">
                         @foreach (var item in ltaPropietarios)
                         {
-                            <option value="@item.Id">@(item.Nombre+" "+item.Apellido)</option>
+                            <option value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
                         }
                     </select>
                     <span asp-validation-for="idPropietario" class="text-danger"></span>
@@ -38,30 +45,22 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Tipo" class="control-label"></label>
-                    <select class="form-control" name="Tipo">
-                        <option selected value="Local">Local</option>
-                        <option value="Deposito">Deposito</option>
-                        <option value="Casa">Casa</option>
-                        <option value="Departamento">Departamento</option>
-                    </select>
-                    <span asp-validation-for="Uso" class="text-danger"></span>
+                    <input asp-for="Tipo" class="form-control" />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Uso" class="control-label"></label>
-                    <select class="form-control" name="Uso">
-                        <option selected value="Residencial">Residencial</option>
-                        <option value="Comercial">Comercial</option>
-                    </select>
+                    <input asp-for="Uso" class="form-control" />
                     <span asp-validation-for="Uso" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Ambientes" class="control-label"></label>
-                    <input asp-for="Ambientes" class="form-control" min="0"/>
+                    <input asp-for="Ambientes" class="form-control" />
                     <span asp-validation-for="Ambientes" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Precio" class="control-label"></label>
-                    <input asp-for="Precio" class="form-control" pattern="[0-9]+" title="Por favor ingresa solo números" />
+                    <input asp-for="Precio" class="form-control" />
                     <span asp-validation-for="Precio" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
@@ -71,30 +70,35 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Longitud" class="control-label"></label>
-                    <input asp-for="Longitud" id="lng-input" class="form-control" readonly/>
+                    <input asp-for="Longitud" id="lng-input"  class="form-control" readonly />
                     <span asp-validation-for="Longitud" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Latitud" class="control-label"></label>
-                    <input asp-for="Latitud" id="lat-input" class="form-control" readonly/>
+                    <input asp-for="Latitud" id="lat-input" class="form-control" readonly />
                     <span asp-validation-for="Latitud" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>
+			<div>
+				<a asp-action="Index">Back to List</a>
+			</div>
         </div>
+		
     </div>
+	
+    
     <div style="height: 400px;width:700px;float:left;margin-left:80px" id="map"></div>
-
     <script>
-        
-        var map = L.map('map').setView([-33.302143, -66.336844], 13);
-        var lastMarker = null;
+        var map = L.map('map').setView([@Model.Latitud, @Model.Longitud], 13);
+        var lastMarker = L.marker([@Model.Latitud, @Model.Longitud]).addTo(map);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
+   
         function onMapClick(e) {
             var latInput = document.getElementById('lat-input');
             var lngInput = document.getElementById('lng-input');
@@ -113,6 +117,7 @@
         }
 
         map.on('click', onMapClick);
+
     </script>
 
 </body>
@@ -122,4 +127,5 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
 
