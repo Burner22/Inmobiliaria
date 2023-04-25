@@ -2,25 +2,35 @@
 
 @{
     ViewData["Title"] = "Create";
+    var contrato = ViewBag.Contrato;
+    var IdContrato = ViewBag.IdContrato;
 }
 
-<h1>Create</h1>
-
-<h4>Pago</h4>
+<h1>Crear Nuevo Pago</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="IdPago" class="control-label"></label>
-                <input asp-for="IdPago" class="form-control" />
+                <input asp-for="IdPago" class="form-control" readonly/>
                 <span asp-validation-for="IdPago" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="IdContrato" class="control-label"></label>
+                <input asp-for="IdContrato" class="form-control"value="@IdContrato" readonly />
+                <span asp-validation-for="IdContrato" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cuota" class="control-label"></label>
                 <input asp-for="Cuota" class="form-control" />
                 <span asp-validation-for="Cuota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NroCuota" class="control-label"></label>
+                <input asp-for="NroCuota" class="form-control" />
+                <span asp-validation-for="NroCuota" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaPago" class="control-label"></label>

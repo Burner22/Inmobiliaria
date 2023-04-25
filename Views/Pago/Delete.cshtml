@@ -18,10 +18,24 @@
             @Html.DisplayFor(model => model.IdPago)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdContrato)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Contrato.IdContrato)
+            @Html.DisplayFor(model => model.Contrato.Inmueble.Direccion)
+            @Html.DisplayFor(model => model.Contrato.Inquilino.Dni)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Cuota)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Cuota)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NroCuota)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NroCuota)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FechaPago)

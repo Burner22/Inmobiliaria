@@ -1,61 +1,50 @@
-﻿namespace Inmobiliaria2.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace Inmobiliaria2.Models
 {
-    using System;
+    public enum enRoles
+    {
+        SuperAdministrador = 1,
+        Administrador = 2,
+        Empleado = 3,
+    }
 
     public class Usuario
     {
-        private int idUsuario;
-        private string email;
-        private string pass;
-        private string alias;
-        private string rol;
+        [Key]
+        [Display(Name = "Código")]
+        public int Id { get; set; }
+        [Required]
+        public string Nombre { get; set; }
+        [Required]
+        public string Apellido { get; set; }
+        [Required, EmailAddress]
+        public string Email { get; set; }
+        [Required, DataType(DataType.Password)]
+        public string Clave { get; set; }
+        public string? Avatar { get; set; }
+        [NotMapped]//Para EF
+        public IFormFile? AvatarFile { get; set; }
+        //[NotMapped]//Para EF
+        //public byte[] AvatarFileContent { get; set; }
+        //[NotMapped]//Para EF
+        //public string AvatarFileName { get; set; }
+        public int? Rol { get; set; }
+        [NotMapped]//Para EF
+        public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
 
-        public Usuario(int idUsuario, string email, string pass, string alias, string rol)
-        {
-            this.idUsuario = idUsuario;
-            this.email = email;
-            this.pass = pass;
-            this.alias = alias;
-            this.rol = rol;
-        }
-
-        public Usuario(string email, string pass, string alias, string rol)
-        {
-            this.email = email;
-            this.pass = pass;
-            this.alias = alias;
-            this.rol = rol;
-        }
-
-        public int IdUsuario
-        {
-            get { return idUsuario; }
-            set { idUsuario = value; }
-        }
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-        public string Pass
-        {
-            get { return pass; }
-            set { pass = value; }
-        }
-
-        public string Alias
-        {
-            get { return alias; }
-            set { alias = value; }
-        }
-
-        public string Rol
-        {
-            get { return rol; }
-            set { rol = value; }
-        }
-    }
+		public static IDictionary<int, string> ObtenerRoles()
+		{
+			SortedDictionary<int, string> roles = new SortedDictionary<int, string>();
+			Type tipoEnumRol = typeof(enRoles);
+			foreach (var valor in Enum.GetValues(tipoEnumRol))
+			{
+				roles.Add((int)valor, Enum.GetName(tipoEnumRol, valor));
+			}
+			return roles;
+		}
+	}
 
 }

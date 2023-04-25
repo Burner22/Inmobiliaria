@@ -4,46 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index Inquilinos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear Inquilino</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdInquilino)
+                Dni
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dni)
+               Cuil/Cuit
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cuil_cuit)
+                Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                Apellido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apellido)
+                Telefono
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Domicilio Trabajo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Domicilio_trabajo)
+                Domicilio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Domicilio)
+                Nombre Garante
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre_garante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dni_garante)
+                Dni Garante
             </th>
             <th></th>
         </tr>
@@ -51,9 +48,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdInquilino)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Dni)
             </td>
@@ -87,7 +81,11 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.IdInquilino }) |
                     @Html.ActionLink("Details", "Details", new { id=item.IdInquilino }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdInquilino })
+                    @if (User.IsInRole("SuperAdministrador") || User.IsInRole("Administrador"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id=item.IdInquilino }) 
+                    }
+                   
             </td>
         </tr>
 }

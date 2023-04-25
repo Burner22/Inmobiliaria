@@ -1,28 +1,71 @@
 @model IEnumerable<Inmobiliaria2.Models.Contrato>
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index Contratos </h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear Contrato</a>
 </p>
+
+<div>
+    <div style="display:inline-block">
+        <h4>Listar Contratos Vigentes: </h4>
+        <form asp-action="DesdeHasta" method="get">
+            <div style="display:inline-block">
+                <label for="Desde">Desde:</label>
+                <input name="desde" type="date" placeholder="Desde" required><span class="fa fa-calendar"></span>
+            </div>
+            <div style="display:inline-block">
+                <label for="Hasta"> Hasta :</label>
+                <input name="hasta" type="date" placeholder="Hasta" required><span class="fa fa-calendar"></span>
+
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+        <br />
+    </div>
+    
+    <div style="display:inline-block">
+        <h4>Listar Inmuebles Disponibles: </h4>
+        <form asp-action="ContratoDesdeHasta" method="get">
+            <div style="display:inline-block">
+                <label for="Desde">Desde:</label>
+                <input name="desde" type="date" placeholder="Desde" required><span class="fa fa-calendar"></span>
+            </div>
+            <div style="display:inline-block">
+                <label for="Hasta"> Hasta :</label>
+                <input name="hasta" type="date" placeholder="Hasta" required><span class="fa fa-calendar"></span>
+
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+        <br />
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
+@*            <th>
+                Nro de Contrato
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.IdContrato)
+                @Html.DisplayNameFor(model => model.IdInquilino)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
+                @Html.DisplayNameFor(model => model.IdInmueble)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
+                Fecha Inicio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MontoAlquiler)
+                Fecha Finalizacion
+            </th>
+            <th>
+                Monto Mensual
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vigente)
@@ -33,8 +76,159 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.IdContrato)
+            </td>*@
+            <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        @item.Inquilino.Nombre @item.Inquilino.Apellido
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div>
+                                        <h4>Inquilino</h4>
+                                        <hr />
+                                        <dl class="row">
+                               
+                                            <dt class="col-sm-2">
+                                                Dni
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Dni
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Cuil_cuit
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Cuil_cuit
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Nombre
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Nombre
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Apellido
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Apellido
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Telefono
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Telefono
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Email
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Email
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Domicilio_trabajo
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Domicilio_trabajo
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Domicilio
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Domicilio
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Nombre_garante
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Nombre_garante
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Dni_garante
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inquilino.Dni_garante
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @*@Html.DisplayFor(modelItem => item.IdInquilino)*@
+            </td>
+            <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInmu">
+                        @item.Inmueble.Tipo
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalInmu" tabindex="-1" aria-labelledby="modalInmuLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div>
+                                        <h4>Inmueble</h4>
+                                        <hr />
+                                        <dl class="row">
+                                         
+                                            <dt class="col-sm-2">
+                                                Propietario
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Propietario.Dni @item.Inmueble.Propietario.Apellido @item.Inmueble.Propietario.Nombre
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Direccion
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Direccion
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Tipo
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Tipo
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Uso
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Uso
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Ambientes
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Ambientes
+                                            </dd>
+                                            <dt class="col-sm-2">
+                                                Disponible
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @item.Inmueble.Disponible
+                                            </dd>
+                                            
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @*@Html.DisplayFor(modelItem => item.IdInmueble)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaInicio)
@@ -46,14 +240,22 @@
                 @Html.DisplayFor(modelItem => item.MontoAlquiler)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Vigente)
+                 @Html.DisplayFor(modelItem => item.Vigente)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-controller="Pago" asp-action="PorContrato" asp-route-id="@item.IdContrato" title="PorContrato">Listar Pagos</a>&nbsp;
+
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.IdContrato }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdContrato }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdContrato })*@
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<style>
+    dt{
+        margin-right: 10px;
+    }
+</style>

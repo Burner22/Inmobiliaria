@@ -3,43 +3,113 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Inmobiliaria2</title>
+    <title>@ViewData["Title"] - Inmobiliaria</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Inmobiliaria2.styles.css" asp-append-version="true" />
     
 </head>
-<body >
-    <header>
+<body style="background-color:#BEAB3E  ">
+    <header >
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria2</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Inmobiliaria</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contrato" asp-action="Index">Contrato</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pago" asp-action="Index">Pago</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propietario" asp-action="Index">Propietario</a>
-                        </li>
-                        
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="Login"><span class="lnr lnr-home"></span> Login</a>
+                            </li>
+
+                        }
+                        @if (User.IsInRole("SuperAdministrador") || User.IsInRole("Administrador"))
+                        {
+                        <div class="dropdown" style="margin-right:5px">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.FindFirst("FullName").Value
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="Index"><span class="lnr lnr-home"></span> Listar</a>
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="Edit" asp-route-miClaim="@User.Identity.Name?.ToString()"><span class="lnr lnr-home"></span> Editar</a>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CambiarContraseña">Cambiar Contraseña</a></li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Logout">Salir</a>
+                                
+                            </ul>
+                        </div>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contrato" asp-action="Index">Contrato</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Propietario" asp-action="Index">Propietario</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Empleado"))
+                        {
+                        <div class="dropdown" style="margin-right:5px">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.FindFirst("FullName").Value
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="Edit" asp-route-miClaim="@User.Identity.Name?.ToString()"><span class="lnr lnr-home"></span> Editar</a>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#CambiarContraseña">Cambiar Contraseña</a></li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Logout">Salir</a>
+                            </ul>
+                        </div>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contrato" asp-action="Index">Contrato</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
+                            </li>
+                            <li class="nav-item" style="margin-right:5px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Propietario" asp-action="Index">Propietario</a>
+                            </li>
+                        }                        
+                                                                  
                     </ul>
+                </div>
+            </div>
+
+            <div class="modal fade" id="CambiarContraseña" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Cambio de contraseña</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form asp-controller="Usuario" asp-action="ModificarClave">
+                                <div class="mb-3">
+                                    <label for="contraActual" class="form-label">Contraseña Actual</label>
+                                    <input type="password" class="form-control" id="contraActual" name="contraActual">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ContraNueva" class="form-label">Contraseña Nueva</label>
+                                    <input type="password" class="form-control" id="ContraNueva" name="ContraNueva">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ContraNuevaRepe" class="form-label">Confirmar Contraseña</label>
+                                    <input type="password" class="form-control" id="ContraNuevaRepe" name="ContraNuevaRepe">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -50,14 +120,37 @@
         </main>
     </div>
 
+
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Inmobiliaria2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Inmobiliaria - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('.toast').toast('show');
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto"><h2>Inmobiliaria</h2></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <h5>@TempData["Mensaje"]</h5>
+                </div>
+            </div>
+        </div>
+    }
+
 </body>
 </html>
+
+

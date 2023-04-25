@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var itaContratos = (IList<Contrato>)ViewBag.Contrato;
 }
 
 <h1>Edit</h1>
@@ -14,13 +15,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdPago" class="control-label"></label>
-                <input asp-for="IdPago" class="form-control" />
+                <input asp-for="IdPago" class="form-control" readonly/>
                 <span asp-validation-for="IdPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Contrato</label>
+                <select asp-for="idContrato" class="form-control" name="idContrato">
+                    @foreach (var item in itaContratos)
+                    {
+                        <option value="@item.IdContrato">@("Nro: " +item.IdContrato + " Inquilino: " + item.Inquilino.Apellido + " Inmueble: " + item.Inmueble.Direccion)</option>
+                    }
+                </select>
+                <span asp-validation-for="idContrato" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cuota" class="control-label"></label>
                 <input asp-for="Cuota" class="form-control" />
                 <span asp-validation-for="Cuota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NroCuota" class="control-label"></label>
+                <input asp-for="NroCuota" class="form-control" />
+                <span asp-validation-for="NroCuota" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaPago" class="control-label"></label>

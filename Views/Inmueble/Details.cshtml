@@ -15,98 +15,33 @@
             crossorigin=""></script>
 </head>
 <body>
-    <h2>Inmueble</h2>
+    <h4>Detalles de inmueble</h4>
     <hr />
     <div style="float: left" class="col-md-4">
         <div>
-			<h4>Duenio: @Model.Propietario.Nombre</h4>
+            Due&ntilde;o: @Model.Propietario.Nombre @Model.Propietario.Apellido
 		</div>
         <div>
-            <h4>Direccion: @Model.Direccion</h4>
+            Direccion: @Model.Direccion
         </div>
         <div>
-            <h4>Tipo: @Model.Tipo</h4>
+            Tipo: @Model.Tipo
         </div>
         <div>
-            <h4> Uso: @Model.Uso</h4>
+            Uso: @Model.Uso
         </div>
         <div>
-            <h4>Ambientes: @Model.Ambientes</h4>
+            Ambientes: @Model.Ambientes
         </div>
         <div>
-            <h4>Precio: @Model.Precio</h4>
+            Precio: @Model.Precio
         </div>
         <div>
-            <h4>Disponible: @Model.Disponible</h4>
+            Disponible: @Model.Disponible
         </div>
-		@*<dl style="display:flex; align-items:center;justify-content:center"class="row">
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.IdInmueble)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.IdInmueble)
-            </dd>*@
-            @* <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.IdPropietario)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Apellido)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Direccion)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Direccion)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Tipo)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Tipo)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Uso)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Uso)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Ambientes)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Ambientes)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Precio)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Precio)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Disponible)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Disponible)
-            </dd>
-            @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Longitud)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Longitud)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Latitud)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Latitud)
-            </dd>
-			</dl>*@
+		
     </div>
     <div style="height: 400px;width:700px;float:left;margin-left:80px" id="map"></div>
-    @*<div>
-        @Html.ActionLink("Edit", "Edit", new { id=Model.IdInmueble }) |
-        <a asp-action="Index">Back to List</a>
-    </div>*@
     <script>
             var map = L.map('map').setView([@Model.Latitud, @Model.Longitud], 13);
             var marker = L.marker([@Model.Latitud, @Model.Longitud]).addTo(map);
@@ -114,24 +49,6 @@
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-        //function onMapClick(e) {
-        //    var latInput = document.getElementById('lat-input');
-        //    var lngInput = document.getElementById('lng-input');
-        //    latInput.value = e.latlng.lat;
-        //    lngInput.value = e.latlng.lng;
-        //    //alert("You clicked the map at " + e.latlng);
-        //    if (lastMarker !== null) {
-        //        lastMarker.remove();
-        //    }
-        //    var lat = e.latlng.lat;
-        //    var lng = e.latlng.lng;
-        //    console.log(e.latlng.toString());
-        //        var marker = L.marker([model.Latitud, model.Longitud]).addTo(map);
-        //    lastMarker = marker;
-
-        //}
-        //console.log(model)
-        //map.on('click', onMapClick);
     </script>
 
 </body>

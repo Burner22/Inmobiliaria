@@ -1,10 +1,11 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
 using System.Threading.Tasks;
 using Inmobiliaria2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration;
@@ -22,30 +23,34 @@ namespace inmobiliaria2.Controllers
         }
 
 
-        // GET: Propietario
-        public ActionResult Index()
+		// GET: Propietario
+		[Authorize]
+		public ActionResult Index()
         {
 
             var lista = repo.GetPropietarios();
             return View(lista);
         }
 
-        // GET: Propietario/Details/5
-        public ActionResult Details(int id)
+		// GET: Propietario/Details/5
+		[Authorize]
+		public ActionResult Details(int id)
         {
             var propietario = repo.GetPropietario(id);
             return View(propietario);
         }
 
-        // GET: Propietario/Create
-        public ActionResult Create()
+		// GET: Propietario/Create
+		[Authorize]
+		public ActionResult Create()
         {
             return View();
         }
 
         // POST: Propietario/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+		[Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult Create(Propietario propietario)
         {
             try
@@ -61,8 +66,9 @@ namespace inmobiliaria2.Controllers
             }
         }
 
-        // GET: Propietario/Edit/5
-        public ActionResult Edit(int id)
+		// GET: Propietario/Edit/5
+		[Authorize]
+		public ActionResult Edit(int id)
         {
             var propietario = repo.GetPropietario(id);
             return View(propietario);
@@ -70,7 +76,8 @@ namespace inmobiliaria2.Controllers
 
         // POST: Propietario/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+		[Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Propietario propietario)
         {
             try
@@ -86,8 +93,9 @@ namespace inmobiliaria2.Controllers
             }
         }
 
-        // GET: Propietario/Delete/5
-        public ActionResult Delete(int id)
+		// GET: Propietario/Delete/5
+		[Authorize]
+		public ActionResult Delete(int id)
         {
             var propietario = repo.GetPropietario(id);
             return View(propietario);
@@ -95,7 +103,8 @@ namespace inmobiliaria2.Controllers
 
         // POST: Propietario/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+		[Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

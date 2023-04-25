@@ -10,6 +10,7 @@ namespace Inmobiliaria2.Models
     public class PropietarioRepositorio
     {
         string connectionString = "Server=localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
+      
         public PropietarioRepositorio()
         {
         }
@@ -47,9 +48,9 @@ namespace Inmobiliaria2.Models
             return res;
         }
 
-        public IList<Propietario> GetPropietarios()
+        public List<Propietario> GetPropietarios()
         {
-            IList<Propietario> res = new List<Propietario>();
+            List<Propietario> res = new List<Propietario>();
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sql = @"SELECT 

@@ -1,0 +1,59 @@
+@model IEnumerable<Inmobiliaria2.Models.Usuario>
+
+@{
+}
+
+<h1>Usuarios</h1>
+
+<p>
+    <a asp-action="Create">Crear Usuario</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Avatar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>          
+            <th>
+                @Html.DisplayNameFor(model => model.Rol)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img width="64" src="@item.Avatar" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>            
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rol)
+                </td>
+                <td>
+                    <a asp-action="EditId" asp-route-id="@item.Id" title="Editar"><span class="lnr lnr-cross">Editar</span></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross">Eliminar</span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

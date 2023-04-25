@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inmobiliaria2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,33 +15,38 @@ namespace Inmobiliaria2.Controllers
 
         public InquilinoController()
         {
+            InmuebleRepositorio inmuRepo = new InmuebleRepositorio();
             repo = new InquilinoRepositorio();
         }
 
 
 
-        // GET: Inquilino
-        public ActionResult Index()
+		// GET: Inquilino
+		[Authorize]
+		public ActionResult Index()
         {
             var lista = repo.GetInquilinos();
             return View(lista);
         }
 
-        // GET: Inquilino/Details/5
-        public ActionResult Details(int id)
+		// GET: Inquilino/Details/5
+		[Authorize]
+		public ActionResult Details(int id)
         {
             var inquilino = repo.GetInquilino(id);
             return View(inquilino);
         }
 
-        // GET: Inquilino/Create
-        public ActionResult Create()
+		// GET: Inquilino/Create
+		[Authorize]
+		public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Inquilino/Create
-        [HttpPost]
+		// POST: Inquilino/Create
+		[Authorize]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Inquilino inquilino)
         {
@@ -58,8 +64,9 @@ namespace Inmobiliaria2.Controllers
             }
         }
 
-        // GET: Inquilino/Edit/5
-        public ActionResult Edit(int id)
+		// GET: Inquilino/Edit/5
+		[Authorize]
+		public ActionResult Edit(int id)
         {
             var inquilino = repo.GetInquilino(id);
             return View(inquilino);
@@ -67,7 +74,8 @@ namespace Inmobiliaria2.Controllers
 
         // POST: Inquilino/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+		[Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Inquilino inquilino)
         {
             try
@@ -82,8 +90,9 @@ namespace Inmobiliaria2.Controllers
             }
         }
 
-        // GET: Inquilino/Delete/5
-        public ActionResult Delete(int id)
+		// GET: Inquilino/Delete/5
+		[Authorize]
+		public ActionResult Delete(int id)
         {
             var inquilino = repo.GetInquilino(id);
             return View(inquilino);
@@ -91,7 +100,8 @@ namespace Inmobiliaria2.Controllers
 
         // POST: Inquilino/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+		[Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

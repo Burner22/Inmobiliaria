@@ -1,6 +1,11 @@
 ﻿using Inmobiliaria2.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Inmobiliaria2.Controllers
 {
@@ -15,6 +20,25 @@ namespace Inmobiliaria2.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Error = TempData["Error"];
+            return View();
+        }
+        [Authorize]
+        public ActionResult Seguro()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+            return View(claims);
+        }
+
+        [Authorize(Policy = "Administrador")]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+
+        public ActionResult Restringido()
+        {
             return View();
         }
 
@@ -22,12 +46,28 @@ namespace Inmobiliaria2.Controllers
         {
             return View();
         }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Ver()
+        {   
+            return View();
         }
+
+        public HttpContext GetHttpContext()
+        {
+            return HttpContext;
+        }
+
+        public IActionResult Error(int codigo)
+		{
+			if(codigo == 404)
+            {
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+			
+		}
+
     }
 }

@@ -1,14 +1,37 @@
-@model IEnumerable<Inmobiliaria2.Models.Inmueble>
+    @model IEnumerable<Inmobiliaria2.Models.Inmueble>
 
 @{
+    var noindex = ViewBag.noindex;    
     ViewData["Title"] = "Index";
+    
 }
+@if(noindex == 1)
+{
+    <h1>Index Inmuebles</h1>
+}
+else
+{
+    <h1>Index Inmuebles</h1>
+    <p>
+        <a asp-action="Create">Crear Inmueble</a>
+    </p>
+}
+<div>
+    <div style="display:inline-block">
+        <form asp-action="Disponibles" method="get">
+              <button type="submit" class="btn btn-primary">Disponibles</button>   
+        </form>
+        <br />  
+    </div>
+    <div style="display:inline-block">
+        <form asp-action="Index" method="get">
+            <button type="submit" class="btn btn-primary">Todos</button>
+        </form>
+        <br />
+    </div>
+    
+</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +47,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Disponible)
             </th>
- 
             <th></th>
         </tr>
     </thead>
@@ -35,20 +57,65 @@
                 @Html.DisplayFor(modelItem => item.IdInmueble)
             </td>
              <td>
-                @Html.DisplayFor(modelItem => item.Propietario.Id)
+                @*@Html.DisplayFor(modelItem => item.Propietario.Nombre)
+                @Html.DisplayFor(modelItem => item.Propietario.Apellido)*@
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        @item.Propietario.Apellido @item.Propietario.Nombre
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Propietario</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <label>Nombre y Apellido</label>
+										<input readonly value="@item.Propietario.Apellido @item.Propietario.Nombre" class="form-control" />
+                                    </div>
+                                    <div>
+                                        <label>Dni</label>
+                                        <input readonly value="@item.Propietario.Dni" class="form-control" />
+                                    </div>
+                                    <div>
+                                        <label>Domicilio</label>
+                                        <input readonly value="@item.Propietario.Domicilio" class="form-control" />
+                                    </div>
+                                    <div>
+                                        <label>Telefono</label>
+                                        <input readonly value="@item.Propietario.Telefono" class="form-control" />
+                                    </div>
+                                    <div>
+                                        <label>Email</label>
+                                        <input readonly value="@item.Propietario.Email" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Disponible)
+                 <a asp-controller="Contrato" asp-action="ContratosDeInmueble" asp-route-id="@item.IdInmueble" title="MisPropiedades">Contratos</a>&nbsp;
             </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.IdInmueble })
-                    @Html.ActionLink("Details", "Details", new { id=item.IdInmueble })
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdInmueble })
-                </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdInmueble })
+                @Html.ActionLink("Details", "Details", new { id=item.IdInmueble })
+                @if (User.IsInRole("SuperAdministrador") || User.IsInRole("Administrador"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdInmueble })   
+                }
+                    
+            </td>
         </tr>
 }
     </tbody>

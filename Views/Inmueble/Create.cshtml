@@ -23,7 +23,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label class="control-label">Propietario</label>
-                    <select asp-for="idPropietario" class="form-control" name="Propietario">
+                    <select asp-for="idPropietario" class="form-control" name="idPropietario">
                         @foreach (var item in ltaPropietarios)
                         {
                             <option value="@item.Id">@(item.Nombre+" "+item.Apellido)</option>
@@ -88,7 +88,6 @@
     <div style="height: 400px;width:700px;float:left;margin-left:80px" id="map"></div>
 
     <script>
-        
         var map = L.map('map').setView([-33.302143, -66.336844], 13);
         var lastMarker = null;
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

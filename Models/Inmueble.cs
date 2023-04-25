@@ -27,16 +27,16 @@ namespace Inmobiliaria2.Models
             this.propietario = propietario;
         }
 
-        public Inmueble(int idInmueble, Propietario propietario, string direccion, bool disponible)
+        public Inmueble(int idInmueble, Propietario propietario, string direccion, bool disponible, bool borrado)
         {
-            this.direccion = direccion; 
-            this.disponible=disponible;
+            this.direccion = direccion;
+            this.disponible = disponible;
             this.idInmueble = idInmueble;
-            this.propietario= propietario;
-                    
+            this.propietario = propietario;
+            this.borrado = borrado;
         }
 
-        public Inmueble(Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
+        public Inmueble(Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud, bool borrado)
         {
             this.propietario = propietario;
             this.direccion = direccion;
@@ -47,9 +47,10 @@ namespace Inmobiliaria2.Models
             this.disponible = disponible;
             this.latitud = latitud;
             this.longitud = longitud;
+            this.borrado = borrado;
         }
 
-        public Inmueble(int idPropietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
+        public Inmueble(int idPropietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud, bool borrado)
         {
             this.idPropietario = idPropietario;
             this.direccion = direccion;
@@ -60,10 +61,11 @@ namespace Inmobiliaria2.Models
             this.disponible = disponible;
             this.latitud = latitud;
             this.longitud = longitud;
+            this.borrado = borrado;
         }
 
         // Constructor con parámetros
-        public Inmueble(int idInmueble, Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud)
+        public Inmueble(int idInmueble, Propietario propietario, string direccion, string tipo, string uso, int ambientes, double precio, bool disponible, string latitud, string longitud, bool borrado)
         {
             this.idInmueble = idInmueble;
             this.propietario = propietario;
@@ -75,6 +77,7 @@ namespace Inmobiliaria2.Models
             this.disponible = disponible;
             this.latitud = latitud;
             this.longitud = longitud;
+            this.borrado = borrado;
         }
 
 
@@ -134,6 +137,12 @@ namespace Inmobiliaria2.Models
         {
             get { return latitud; }
             set { latitud = value; }
+        }
+
+        public bool Borrado
+        {
+            get { return borrado; }
+            set { borrado = value; }
         }
     }
 

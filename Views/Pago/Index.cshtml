@@ -2,39 +2,44 @@
 
 @{
     ViewData["Title"] = "Index";
+    var IdContrato = ViewBag.IdContrato;
 }
 
-<h1>Index</h1>
+<h1>Listado de Pagos</h1>
+<a asp-controller="Pago" asp-action="Create" asp-route-id="@IdContrato" title="PorContrato"> Agregar Nuevo Pago</a>&nbsp;
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdPago)
+                Nro de Contrato
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cuota)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaPago)
+                Nro de Cuota
+            </th>
+            <th>
+                Fecha de Pago
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Anulado)
             </th>
-            <th></th>
+            <th></th>    
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPago)
+                @Html.DisplayFor(modelItem => item.Contrato.IdContrato)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cuota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroCuota)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaPago)
@@ -43,9 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Anulado)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                 @Html.ActionLink("Delete", "Delete", new { id=item.IdPago})
             </td>
         </tr>
 }

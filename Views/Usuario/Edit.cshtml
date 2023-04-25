@@ -1,0 +1,110 @@
+﻿@model Inmobiliaria2.Models.Usuario
+
+@{
+	
+}
+
+<h3>Usuario</h3>
+<div class="row" >
+	<div class="col-md-4">
+		<form asp-action="Edit" method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group" style="display:none">
+				<label asp-for="Id" class="control-label"></label>
+				<input asp-for="Id" class="form-control" />
+				<span asp-validation-for="Id" class="text-danger"></span>
+			</div>
+			<div class="form-group" >
+				<label asp-for="AvatarFile" class="control-label" ><h4>Foto de perfil:</h4> </label><br />
+				<img id="vista-previa" src="@Model.Avatar" style="max-width: 150px;border-radius: 50%;width: 150px;height: 150px;">		
+				<input type="file" name="AvatarFile" onchange="mostrarVistaPrevia()" accept="image/*">
+				<span asp-validation-for="AvatarFile" class="text-danger"></span>
+			</div>
+			
+			<div class="form-group">
+				<label asp-for="Nombre" class="control-label"></label>
+				<input asp-for="Nombre" class="form-control" />
+				<span asp-validation-for="Nombre" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Apellido" class="control-label"></label>
+				<input asp-for="Apellido" class="form-control" />
+				<span asp-validation-for="Apellido" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email"  class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+
+			@if (User.IsInRole("SuperAdministrador") || User.IsInRole("Administrador"))
+			{
+				<div class="form-group">
+					<label class="control-label">Rol</label>
+					<select class="form-control" name="Rol">
+						@foreach (var kvp in (IDictionary<int, string>)ViewBag.Roles)
+						{
+							@:<option @(kvp.Key == Model.Rol ? "selected" : "") value="@kvp.Key">@kvp.Value</option>
+							//<option value="@kvp.Key">@kvp.Value</option>
+						}
+					</select>
+					<span asp-validation-for="Rol" class="text-danger"></span>
+				</div>
+			}
+			else
+			{
+				<div class="form-group">
+					<label class="control-label">Rol</label>
+					<select class="form-control" name="Rol">				
+						<option readonly value="3">Empleado</option>						
+					</select>
+					<span asp-validation-for="Rol" class="text-danger"></span>
+				</div>
+			}
+
+			<div class="form-group">
+				<input type="submit" value="Guardar" class="btn btn-primary" />
+			</div>
+		</form>	
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+	function mostrarVistaPrevia() {
+		var archivo = document.querySelector('input[name="AvatarFile"]').files[0];
+		var vistaPrevia = document.querySelector('#vista-previa');
+
+		// Validar que se seleccionó un archivo
+		if (!archivo) {
+			vistaPrevia.src = "#";
+			vistaPrevia.style.display = "none";
+			return;
+		}
+
+		// Validar que el archivo seleccionado es una imagen
+		if (!archivo.type.match('image.*')) {
+			vistaPrevia.src = "#";
+			vistaPrevia.style.display = "none";
+			return;
+		}
+
+		// Mostrar la vista previa de la imagen seleccionada
+		var lector = new FileReader();
+		lector.onload = function () {
+			vistaPrevia.src = lector.result;
+			vistaPrevia.style.display = "block";
+		}
+		lector.readAsDataURL(archivo);
+	}
+
+
+ 
+</script>
+
+
+
+
